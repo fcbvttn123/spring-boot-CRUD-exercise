@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h1>Welcome!!!</h1>
+	
+	<h3>Kid Table</h3>
+	<table th:if="${petList != null and !petList.empty}">
+		<tr>
+			<th>ID</th>
+			<th>Kid Name</th>
+			<th>Age</th>
+			<th>Pet Name</th>
+		</tr>
+		<tr th:each="kid: ${kidList}">
+			<td th:text="${kid.id}">Twinkles</td>
+			<td th:text="${kid.name}">Twinkles</td>
+			<td th:text="${kid.age}">True</td>
+			<td th:if="${kid.pet != null and kid.pet.name != null and !kid.pet.name.isEmpty()}" th:text="${kid.pet.name}"></td>
+		</tr>
+	</table>
+	
+	<h3>Add Kid Form</h3>
+	<form method="post" action="/addKid" th:object="${kid}">
+		<input type="hidden" th:field="*{id}" /> 
+		Name: <input type="text" th:field="*{name}" /><br> 
+		Age: <input type="number" th:field="*{age}" /><br> 
+		<!-- 
+		Pet: <select name="pet" th:field="*{pet}">
+			<option value="">-- Add Pet Later --</option>
+			<option th:each="p : ${petList}" th:value="${p.id}" th:text="${p.name}" />
+		</select> <br> 
+		-->
+		<input type="submit" value="Add Kid!" />
+	</form>
+	
+	<h3>Add Pet Form</h3>
+	<form method="post" action="/addPet" th:object="${pet}">
+		<input type="hidden" th:field="*{id}" /> 
+		Name: <input type="text" th:field="*{name}" /><br> 
+		Furry?: <input type="checkbox" th:field="*{furry}" th:value="${true}"><br> 
+		Pet Type: <select th:field="*{petType}">
+			<option th:each="p : ${petTypes}" th:value="${p}" th:text="${p}"></option>
+		</select><br>
+		Kid ID: <select name="kidId">
+			<option th:each="p : ${kidList}" th:value="${p.id}" th:text="${p.id}"></option>
+		</select><br>
+		<input type="submit" value="Add Pet!" />
+	</form>
+	
+</body>
+</html>
